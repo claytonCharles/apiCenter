@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 import pandas as pd
 import io
+import tempfile
 
 def ScraperOlx(search, pages):
     myHeaders = {
@@ -36,17 +37,3 @@ def ScraperOlx(search, pages):
         except:
             pass
     return jsonData
-
-def TableXlsx(data):
-    itens = []
-    precos = []
-    links = []
-    for row in data:
-        itens.append(row['item'])
-        precos.append(row['preco'])
-        links.append(row['link'])
-    table = pd.DataFrame( { 'Item': itens, 'Preço': precos, 'Link': links } )
-    by = io.BytesIO()
-    table.to_excel(by)
-
-    return by.getvalue()
